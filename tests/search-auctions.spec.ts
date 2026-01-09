@@ -1,39 +1,28 @@
-import {test, expect} from '@playwright/test';
-import {PageManager} from "../page-objects/pageManager";
+import {test, expect} from './test-base';
 
 test.describe('Search lots functionality', () => {
-    let pm: PageManager;
 
-    test.beforeEach(async ({page}) => {
-        pm = new PageManager(page);
-
-        await page.goto('/');
-    });
-
-    test('Search train lot. Extract name, favorites, current bid', async () => {
+    test('Search train lot. Extract name, favorites, current bid', async ({pm}) => {
         const keyword = 'train';
 
         await pm.onHeader().searchFor(keyword);
 
         await pm.onSearchResults().verifyPageIsOpen();
-        await expect.soft(pm.onSearchResults().searchResultTitleLocator).toBeVisible();
-        await expect.soft(pm.onSearchResults().searchResultTitleLocator).toHaveText(keyword);
+        await expect(pm.onSearchResults().resultsTitle).toHaveText(keyword);
 
         await pm.onSearchResults().clickOnLotCardByIndex(1);
 
         await pm.onLotDetailsPage().verifyPageIsOpen();
-        await expect(pm.onLotDetailsPage().lotTitleLocator).toBeVisible();
-        await expect(pm.onLotDetailsPage().lotFavoritesCountLocator).toBeVisible();
-        await expect(pm.onLotDetailsPage().lotCurrentBidAmountLocator).toBeVisible();
+        await expect(pm.onLotDetailsPage().title).toBeVisible();
+        await expect(pm.onLotDetailsPage().favoritesCount).toBeVisible();
+        await expect(pm.onLotDetailsPage().currentBid).toBeVisible();
 
-        const lotTitle = await pm.onLotDetailsPage().getLotTitle();
-        console.log(`Lot title: ${lotTitle}`);
+        const title = await pm.onLotDetailsPage().getTitle();
+        const favoriteCount = await pm.onLotDetailsPage().getFavoritesCount();
+        const currentBid = await pm.onLotDetailsPage().getCurrentBid();
 
-        const lotFavoriteButtonCount = await pm.onLotDetailsPage().getLotFavoriteCount();
-        console.log(`Lot favorites count: ${lotFavoriteButtonCount}`);
-
-        const lotCurrentBidAmount = await pm.onLotDetailsPage().getLotCurrentBidAmount();
-        console.log(`Current bid: ${lotCurrentBidAmount}`);
-
+        console.log(`Title: ${title}`);
+        console.log(`Favorites count: ${favoriteCount}`);
+        console.log(`Current bid: ${currentBid}`);
     });
 });
