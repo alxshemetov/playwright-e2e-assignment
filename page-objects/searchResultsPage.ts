@@ -4,13 +4,19 @@ export class SearchResultsPage {
     private readonly page: Page;
     private readonly searchResults: Locator;
     public readonly resultsTitle: Locator;
-    private readonly lotCard: Locator;
+    public readonly lotCards: Locator;
+    public readonly objectAmount: Locator;
+    public readonly emptyResults: Locator
+    public readonly resetFiltersBtn: Locator
 
     constructor(page: Page) {
         this.page = page;
         this.searchResults = page.getByTestId('SearchResults');
         this.resultsTitle = page.locator('main').locator('h1');
-        this.lotCard = page.getByTestId(/lot-card-container-/);
+        this.lotCards = page.getByTestId(/lot-card-container-/);
+        this.objectAmount = page.getByTestId('object-amount');
+        this.emptyResults = page.getByTestId('EmptyResultsWithSelectedFilters');
+        this.resetFiltersBtn = page.getByRole('button', {name: 'Reset filters'});
     }
 
     async verifyPageIsOpen() {
@@ -19,6 +25,6 @@ export class SearchResultsPage {
     }
 
     async clickOnLotCardByIndex(index: number) {
-        await this.lotCard.nth(index).click();
+        await this.lotCards.nth(index).click();
     }
 }
