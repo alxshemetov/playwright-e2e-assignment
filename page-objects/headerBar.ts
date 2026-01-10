@@ -1,6 +1,6 @@
 import {type Locator, type Page} from '@playwright/test';
 
-export class Header {
+export class HeaderBar {
     private readonly page: Page;
     private readonly searchField: Locator;
     private readonly searchBtn: Locator;
