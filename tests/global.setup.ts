@@ -1,4 +1,4 @@
-import {test as setup} from './test-base';
+import {test as setup} from '../fixtures/test-base';
 
 const authFile = 'playwright/.auth/user.json';
 
