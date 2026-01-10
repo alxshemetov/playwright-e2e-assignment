@@ -8,15 +8,16 @@ export class SearchResultsPage {
     public readonly objectAmount: Locator;
     public readonly emptyResults: Locator
     public readonly resetFiltersBtn: Locator
+    public readonly noMatchesMessage: Locator
 
     constructor(page: Page) {
         this.page = page;
         this.searchResults = page.getByTestId('SearchResults');
         this.resultsTitle = page.locator('main').locator('h1');
         this.lotCards = page.getByTestId(/lot-card-container-/);
-        this.objectAmount = page.getByTestId('object-amount');
         this.emptyResults = page.getByTestId('EmptyResultsWithSelectedFilters');
         this.resetFiltersBtn = page.getByRole('button', {name: 'Reset filters'});
+        this.noMatchesMessage = page.getByText(/No matches for/);
     }
 
     async verifyPageIsOpen() {

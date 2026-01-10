@@ -11,8 +11,8 @@ export class LotDetailsPage {
         this.page = page;
         this.openObjectDetailsPage = page.locator('[data-sentry-component="OpenObjectDetailsPage"]');
         this.lotTitle = page.locator('main').locator('h1');
-        this.favoritesCount = page.locator('button[data-sentry-component="FavoriteButton"]').first().locator('span');
-        this.currentBid = page.locator('[data-sentry-component="Amount"]').first();
+        this.favoritesCount = page.locator('[data-sentry-component="LotDetailsFavoriteButton"]').locator('[data-sentry-component="FavoriteButton"]');
+        this.currentBid = page.getByTestId('lot-bid-status-section').locator('[data-sentry-component="Amount"]');
     }
 
     async verifyPageIsOpen() {

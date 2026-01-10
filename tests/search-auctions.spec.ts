@@ -51,4 +51,12 @@ test.describe('Search lots functionality', () => {
 
         await expect(pm.onSearchResults().lotCards.first()).toBeVisible();
     });
+
+    test('Search for single-character then verify "No matches" message', async ({pm}) => {
+        const keyword = faker.string.alpha(1);
+        await pm.onHeader().searchFor(keyword);
+
+        await expect(pm.onSearchResults().noMatchesMessage).toBeVisible();
+        await expect(pm.onSearchResults().noMatchesMessage).toContainText(`No matches for “${keyword}”`);
+    })
 });
